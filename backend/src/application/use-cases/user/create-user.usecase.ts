@@ -1,12 +1,18 @@
+import { Inject, Injectable } from "@nestjs/common";
 import { UserMapper } from "src/application/mappers/user.mapper";
 import { User } from "src/domain/entities/User";
-import { IUserRepository } from "src/domain/repositories/user.repository";
+import { USER_REPOSITORY, IUserRepository } from "src/domain/repositories/user.repository";
 import { EmailVO } from "../../../domain/value-objects/email.vo";
 import { PasswordVO } from "../../../domain/value-objects/password.vo";
 import { CreateUserInput, UserOutputDto } from "../../dto/user.dto";
 
+@Injectable()
 export class CreateUserUseCase {
-    constructor(private readonly userRepository: IUserRepository) { }
+
+    constructor(
+        @Inject(USER_REPOSITORY)
+        private readonly userRepository: IUserRepository,
+    ) { }
 
     async execute(input: CreateUserInput): Promise<UserOutputDto> {
         // 1. Converter input → VOs → Entidade de Dominio

@@ -12,7 +12,7 @@ export class EmailVO {
     const normalized = value.trim().toLowerCase();
 
     if (!this.isValid(normalized)) {
-      throw new InvalidEmailException(normalized);
+      throw new InvalidEmailException(`Invalid format for email: ${value}`);
     }
 
     this._value = normalized;

@@ -2,11 +2,11 @@ import { User } from "../entities/User";
 
 export const USER_REPOSITORY = Symbol("USER_REPOSITORY");
 
-export interface IUserRepository {
-  findById(id: string): Promise<User | null>;
-  findAll(): Promise<User[]>;
-  findByEmail(email: string): Promise<User | null>;
-  save(user: User): Promise<void>;
-  update(user: User): Promise<void>;
-  delete(id: string): Promise<void>;
+export abstract class IUserRepository {
+  abstract findById(id: string): Promise<User | null>;
+  abstract findAll(): Promise<User[]>;
+  abstract findByEmail(email: string): Promise<User | null>;
+  abstract save(user: User): Promise<void>;
+  abstract update(user: User): Promise<void>;
+  abstract delete(id: string): Promise<void>;
 }

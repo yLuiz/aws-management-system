@@ -2,9 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "src/domain/entities/User";
 import { IUserRepository } from "src/domain/repositories/user.repository";
-import { TypeORMUserEntity } from "../entities/type-orm-user.entity";
 import { Repository } from "typeorm";
-import { UserMapper } from "src/application/mappers/user.mapper";
+import { TypeORMUserEntity } from "../entities/type-orm-user.entity";
 import { UserOrmMapper } from "../mappers/user.orm.mapper";
 
 @Injectable()

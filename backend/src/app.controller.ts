@@ -9,4 +9,9 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('check-email')
+  checkEmail(): void {
+    this.appService.checkEmail();
+  }
 }

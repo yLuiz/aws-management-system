@@ -5,14 +5,13 @@ import { TypeORMProductEntity } from "../entities/type-orm-product.entity";
 
 export class ProductOrmMapper {
 
-    static toDomain(entity: TypeORMProductEntity): Product | null {
-        if (!entity) return null;
+    static toDomain(entity: TypeORMProductEntity): Product {
 
         return new Product(
             {
                 name: entity.name,
                 description: entity.description,
-                price: new PriceVO(entity.price),
+                price: new PriceVO(parseFloat(entity.price as unknown as string)), // number → VO
                 stock: entity.stock,
                 active: entity.active,
                 createdAt: entity.created_at,

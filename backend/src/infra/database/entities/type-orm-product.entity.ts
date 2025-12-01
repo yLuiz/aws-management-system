@@ -17,7 +17,7 @@ export class TypeORMProductEntity {
   @Column({ type: "text", nullable: true })
   description?: string | null;
 
-  @Column({ type: "numeric", precision: 10, scale: 2 })
+  @Column({ type: "decimal", precision: 10, scale: 2 })
   price: number;
 
   @Column({ type: "int" })

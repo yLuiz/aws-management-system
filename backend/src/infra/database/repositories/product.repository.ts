@@ -17,12 +17,24 @@ export class ProductRepository implements IProductRepository {
         await this._productRepository.save(ormEntity);
     }
 
+    async findAll(): Promise<Product[]> {
+        const products = await this._productRepository.find();
+        if (!products) return [];
+
+        return products.map(ProductOrmMapper.toDomain);
+    }
+
     async findById(id: string): Promise<Product | null> {
         const product = await this._productRepository.findOne({ where: { id } });
 
         if (!product) return null;
 
         return ProductOrmMapper.toDomain(product);
+    }
+
+    async update(product: Product): Promise<void> {
+        const ormEntity = ProductOrmMapper.toPersistence(product);
+        await this._productRepository.update(ormEntity.id, ormEntity);
     }
 
     async delete(id: string): Promise<void> {

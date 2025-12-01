@@ -4,14 +4,17 @@ export class PriceVO {
   private readonly _value: number;
 
   constructor(value: number) {
-    if (typeof value !== "number" || Number.isNaN(value)) {
+
+    console.log('Creating PriceVO with value:', value);
+
+    if (typeof value !== "number" && Number.isNaN(value)) {
       throw new InvalidPriceException("Price must be a valid number");
     }
 
     if (value < 0) {
       throw new InvalidPriceException("Price cannot be negative");
     }
-
+    
     // Optional: normaliza casas decimais
     this._value = Number(value.toFixed(2));
   }

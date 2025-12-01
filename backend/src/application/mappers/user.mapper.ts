@@ -19,6 +19,11 @@ export class UserMapper {
     static toDomainUpdate(existing: User, dto: UpdateUserInput): User {
         // atualiza somente os campos enviados
         if (dto.name) existing.updateName(dto.name);
+        if (dto.email) existing.updateEmail(new EmailVO(dto.email));
+        if (dto.name) existing.updateName(dto.name);
+        if (dto.password) existing.updatePassword(PasswordVO.create(dto.password));
+        if (dto.active !== undefined) existing.updateStatus(dto.active);
+
 
         return existing;
     }

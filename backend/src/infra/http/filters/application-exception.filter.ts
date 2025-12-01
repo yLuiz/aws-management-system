@@ -5,18 +5,22 @@ import {
     HttpStatus,
     Logger,
 } from '@nestjs/common';
-import { InvalidEmailException } from 'src/domain/exceptions/InvalidEmailException';
-import { InvalidPasswordException } from 'src/domain/exceptions/InvalidPasswordException';
+import { DuplicateEmailException } from 'src/application/exceptions/DuplicateEmailException';
+import { ProductNotFountException } from 'src/application/exceptions/ProductNotFountException';
+import { ProductStockNotEnoughException } from 'src/application/exceptions/ProductStockNotEnoughException';
+import { UserNotFoundException } from 'src/application/exceptions/UserNotFoundException';
 
 const DOMAIN_EXCEPTION_MAP = new Map([
-    [InvalidEmailException, HttpStatus.BAD_REQUEST],
-    [InvalidPasswordException, HttpStatus.BAD_REQUEST],
+    [DuplicateEmailException, HttpStatus.BAD_REQUEST],
+    [ProductStockNotEnoughException, HttpStatus.BAD_REQUEST],
+    [ProductNotFountException, HttpStatus.NOT_FOUND],
+    [UserNotFoundException, HttpStatus.NOT_FOUND],
 ]);
 
 @Catch()
-export class DomainExceptionFilter implements ExceptionFilter {
+export class ApplicationExceptionFilter implements ExceptionFilter {
 
-    private _logger = new Logger(DomainExceptionFilter.name);
+    private _logger = new Logger(ApplicationExceptionFilter.name);
 
     catch(exception: any, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
@@ -24,9 +28,8 @@ export class DomainExceptionFilter implements ExceptionFilter {
 
         for (const [ExceptionClass, statusCode] of DOMAIN_EXCEPTION_MAP.entries()) {
             if (exception instanceof ExceptionClass) {
-
                 this._logger.warn(`Handled exception: ${exception.message}`);
-
+                
                 return res.status(statusCode).json({
                     statusCode,
                     message: exception.message,

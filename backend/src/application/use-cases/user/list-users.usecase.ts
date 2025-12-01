@@ -1,10 +1,15 @@
+import { Inject, Injectable } from "@nestjs/common";
 import { ListUsersOutput } from "src/application/dto/user.dto";
 import { UserMapper } from "src/application/mappers/user.mapper";
-import { IUserRepository } from "src/domain/repositories/user.repository";
+import { IUserRepository, USER_REPOSITORY } from "src/domain/repositories/user.repository";
 
 
+@Injectable()
 export class ListUsersUseCase {
-    constructor(private readonly userRepository: IUserRepository) { }
+    constructor(
+        @Inject(USER_REPOSITORY)
+        private readonly userRepository: IUserRepository
+    ) { }
 
     async execute(): Promise<ListUsersOutput> {
         const users = await this.userRepository.findAll();
